@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Waves, RefreshCw } from 'lucide-react';
+import { getStats } from '@/lib/supabase';
 
 const footerLinks = {
   browse: [
@@ -24,7 +25,8 @@ const footerLinks = {
   ],
 };
 
-export function Footer() {
+export async function Footer() {
+  const stats = await getStats();
   return (
     <footer className="border-t border-border bg-background-secondary">
       <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
@@ -36,7 +38,7 @@ export function Footer() {
               <span>US Dams Database</span>
             </Link>
             <p className="mt-4 text-sm text-foreground-secondary">
-              Comprehensive database of 91,000+ dams across the United States,
+              Comprehensive database of {stats.totalDams.toLocaleString()}+ dams across the United States,
               sourced from the National Inventory of Dams.
             </p>
           </div>
@@ -103,7 +105,7 @@ export function Footer() {
                 href="https://nid.sec.usace.army.mil/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-accent hover:underline"
+                className="text-accent underline underline-offset-2 hover:text-accent/80"
               >
                 NID
               </a>

@@ -1,44 +1,12 @@
-import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, AlertTriangle, Droplets, Building2, ArrowRight, Shield, Activity, Waves } from 'lucide-react';
 import { SearchBar } from '@/components/SearchBar';
 import { NumberTicker } from '@/components/NumberTicker';
 import { LeaderboardAd, InContentAd } from '@/components/AdUnit';
+import { getStats } from '@/lib/supabase';
 
 export const dynamic = 'force-dynamic';
-
-async function getStats() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-
-  const [
-    { count: totalDams },
-    { count: highHazard },
-    { count: significantHazard },
-    { data: states },
-    { data: purposes },
-    { data: ownerTypes }
-  ] = await Promise.all([
-    supabase.from('dams').select('*', { count: 'exact', head: true }),
-    supabase.from('dams').select('*', { count: 'exact', head: true }).eq('hazard_potential', 'High'),
-    supabase.from('dams').select('*', { count: 'exact', head: true }).eq('hazard_potential', 'Significant'),
-    supabase.from('states').select('name, slug, dam_count, high_hazard_count').order('dam_count', { ascending: false }).limit(12),
-    supabase.from('purposes').select('name, slug, dam_count').order('dam_count', { ascending: false }).limit(6),
-    supabase.from('owner_types').select('name, slug, dam_count').order('dam_count', { ascending: false }).limit(6)
-  ]);
-
-  return {
-    totalDams: totalDams || 0,
-    highHazard: highHazard || 0,
-    significantHazard: significantHazard || 0,
-    states: states || [],
-    purposes: purposes || [],
-    ownerTypes: ownerTypes || []
-  };
-}
 
 export default async function HomePage() {
   const stats = await getStats();
@@ -66,7 +34,7 @@ export default async function HomePage() {
               <span className="text-sm font-medium">National Inventory of Dams</span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white">
-              Explore <span className="text-accent">91,000+</span> Dams<br className="hidden sm:inline" /> Across America
+              Explore <span className="text-accent">{stats.totalDams.toLocaleString()}+</span> Dams<br className="hidden sm:inline" /> Across America
             </h1>
             <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto">
               The most comprehensive database of U.S. dams. Search by location, hazard level, purpose, and more. Access safety data, inspection records, and dam specifications.
@@ -125,7 +93,7 @@ export default async function HomePage() {
             </div>
             <Link
               href="/state"
-              className="hidden sm:flex items-center gap-2 text-accent hover:text-accent/80 font-medium transition-colors"
+              className="hidden sm:flex items-center gap-2 text-accent hover:text-accent/80 font-medium transition-colors underline underline-offset-2"
             >
               View all states
               <ArrowRight className="h-4 w-4" />
@@ -150,7 +118,7 @@ export default async function HomePage() {
           <div className="mt-6 text-center sm:hidden">
             <Link
               href="/state"
-              className="inline-flex items-center gap-2 text-accent hover:text-accent/80 font-medium"
+              className="inline-flex items-center gap-2 text-accent hover:text-accent/80 font-medium underline underline-offset-2"
             >
               View all states
               <ArrowRight className="h-4 w-4" />
@@ -173,21 +141,21 @@ export default async function HomePage() {
               level="High"
               description="Failure would likely cause loss of human life"
               count={stats.highHazard}
-              color="bg-hazard-high"
+              color="bg-red-800"
               href="/hazard/high"
             />
             <HazardCard
               level="Significant"
               description="Failure could cause significant economic loss"
               count={stats.significantHazard}
-              color="bg-hazard-significant"
+              color="bg-amber-700"
               href="/hazard/significant"
             />
             <HazardCard
               level="Low"
               description="Failure would cause minimal damage"
               count={stats.totalDams - stats.highHazard - stats.significantHazard}
-              color="bg-hazard-low"
+              color="bg-green-800"
               href="/hazard/low"
             />
           </div>
@@ -202,7 +170,7 @@ export default async function HomePage() {
             <div>
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-foreground">Browse by Purpose</h2>
-                <Link href="/purpose" className="text-sm text-accent hover:text-accent/80 flex items-center gap-1">
+                <Link href="/purpose" className="text-sm text-accent hover:text-accent/80 flex items-center gap-1 underline underline-offset-2">
                   View all <ArrowRight className="h-3 w-3" />
                 </Link>
               </div>
@@ -231,7 +199,7 @@ export default async function HomePage() {
             <div>
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-foreground">Browse by Owner Type</h2>
-                <Link href="/owner" className="text-sm text-accent hover:text-accent/80 flex items-center gap-1">
+                <Link href="/owner" className="text-sm text-accent hover:text-accent/80 flex items-center gap-1 underline underline-offset-2">
                   View all <ArrowRight className="h-3 w-3" />
                 </Link>
               </div>
@@ -271,7 +239,7 @@ export default async function HomePage() {
             Find Dams Near You
           </h2>
           <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">
-            Search our database of over 91,000 dams to find safety information, inspection records, and detailed specifications.
+            Search our database of over {stats.totalDams.toLocaleString()} dams to find safety information, inspection records, and detailed specifications.
           </p>
           <Link
             href="/state"

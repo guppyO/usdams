@@ -1,13 +1,17 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ExternalLink, Database, Shield, Clock, MapPin } from 'lucide-react';
+import { getStats } from '@/lib/supabase';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'About',
   description: 'Learn about US Dams Database - a comprehensive resource for dam information across the United States, sourced from the National Inventory of Dams.',
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const stats = await getStats();
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
       <h1 className="text-3xl font-bold text-foreground mb-8">About US Dams Database</h1>
@@ -32,7 +36,7 @@ export default function AboutPage() {
               href="https://nid.sec.usace.army.mil/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-accent hover:underline inline-flex items-center gap-1"
+              className="text-accent underline underline-offset-2 hover:text-accent/80 inline-flex items-center gap-1"
             >
               National Inventory of Dams (NID)
               <ExternalLink className="h-4 w-4" />
@@ -41,7 +45,7 @@ export default function AboutPage() {
           </p>
           <p className="text-foreground-secondary">
             The NID is the most comprehensive database of dams in the United States, containing
-            information on over 91,000 dams. The database includes details such as dam location,
+            information on over {stats.totalDams.toLocaleString()} dams. The database includes details such as dam location,
             dimensions, hazard classification, owner information, and inspection records.
           </p>
         </section>
@@ -111,7 +115,7 @@ export default function AboutPage() {
                 href="https://nid.sec.usace.army.mil/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-accent hover:underline"
+                className="text-accent underline underline-offset-2 hover:text-accent/80"
               >
                 official NID website
               </a>
@@ -124,11 +128,11 @@ export default function AboutPage() {
           <h2 className="text-xl font-semibold text-foreground">Legal</h2>
           <p className="text-foreground-secondary">
             Please review our{' '}
-            <Link href="/privacy" className="text-accent hover:underline">
+            <Link href="/privacy" className="text-accent underline underline-offset-2 hover:text-accent/80">
               Privacy Policy
             </Link>
             {' '}and{' '}
-            <Link href="/terms" className="text-accent hover:underline">
+            <Link href="/terms" className="text-accent underline underline-offset-2 hover:text-accent/80">
               Terms of Use
             </Link>
             {' '}for more information about how we handle data and your use of this website.
