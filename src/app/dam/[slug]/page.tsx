@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { DamCard } from '@/components/DamCard';
-import { SidebarAd } from '@/components/AdUnit';
+import { InContentAd } from '@/components/AdUnit';
 import { cn } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
@@ -183,6 +183,8 @@ export default async function DamPage({ params }: PageProps) {
               </div>
             </section>
 
+            <InContentAd />
+
             {/* Storage & Hydrology */}
             <section className="bg-card rounded-lg border border-border p-6">
               <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
@@ -256,7 +258,7 @@ export default async function DamPage({ params }: PageProps) {
                     href={`https://www.google.com/maps?q=${dam.latitude},${dam.longitude}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-accent hover:underline inline-flex items-center gap-1"
+                    className="text-sm text-accent underline underline-offset-2 hover:text-accent/80 inline-flex items-center gap-1"
                   >
                     Google Maps
                     <ExternalLink className="h-3 w-3" />
@@ -265,7 +267,7 @@ export default async function DamPage({ params }: PageProps) {
                     href={`https://www.openstreetmap.org/?mlat=${dam.latitude}&mlon=${dam.longitude}#map=15/${dam.latitude}/${dam.longitude}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-accent hover:underline inline-flex items-center gap-1"
+                    className="text-sm text-accent underline underline-offset-2 hover:text-accent/80 inline-flex items-center gap-1"
                   >
                     OpenStreetMap
                     <ExternalLink className="h-3 w-3" />
@@ -291,13 +293,13 @@ export default async function DamPage({ params }: PageProps) {
                 )}
                 <div>
                   <span className="text-muted-foreground">State: </span>
-                  <Link href={`/state/${stateSlug}`} className="text-accent hover:underline">
+                  <Link href={`/state/${stateSlug}`} className="text-accent underline underline-offset-2 hover:text-accent/80">
                     {dam.state}
                   </Link>
                 </div>
                 <div>
                   <span className="text-muted-foreground">County: </span>
-                  <Link href={`/state/${stateSlug}/${countySlug}`} className="text-accent hover:underline">
+                  <Link href={`/state/${stateSlug}/${countySlug}`} className="text-accent underline underline-offset-2 hover:text-accent/80">
                     {dam.county}
                   </Link>
                 </div>
@@ -374,8 +376,6 @@ export default async function DamPage({ params }: PageProps) {
               </div>
             </div>
 
-            {/* Ad Unit */}
-            <SidebarAd />
           </div>
         </div>
 
