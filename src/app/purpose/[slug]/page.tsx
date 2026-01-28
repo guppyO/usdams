@@ -44,19 +44,17 @@ async function getPurposeData(slug: string, page: number, stateFilter?: string) 
     .order('name')
     .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
 
-  // Get states with this purpose
+  // Get all states for the filter
   const { data: statesData } = await supabase
-    .from('dams')
-    .select('state')
-    .eq('primary_purpose', purpose.name);
-
-  const uniqueStates = [...new Set(statesData?.map(d => d.state) || [])].sort();
+    .from('states')
+    .select('name')
+    .order('name');
 
   return {
     purpose,
     dams: dams || [],
     totalDams: count || 0,
-    states: uniqueStates
+    states: statesData?.map(s => s.name) || []
   };
 }
 

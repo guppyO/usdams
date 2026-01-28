@@ -56,11 +56,10 @@ async function getHazardData(level: string, page: number, stateFilter?: string) 
     .order('name')
     .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
 
-  // Get states with this hazard level
+  // Get all states for the filter
   const { data: states } = await supabase
     .from('states')
-    .select('name, slug, high_hazard_count')
-    .gt(level === 'high' ? 'high_hazard_count' : 'dam_count', 0)
+    .select('name, slug')
     .order('name');
 
   return {

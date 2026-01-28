@@ -44,19 +44,17 @@ async function getOwnerData(typeSlug: string, page: number, stateFilter?: string
     .order('name')
     .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
 
-  // Get states with this owner type
+  // Get all states for the filter
   const { data: statesData } = await supabase
-    .from('dams')
-    .select('state')
-    .eq('primary_owner_type', ownerType.name);
-
-  const uniqueStates = [...new Set(statesData?.map(d => d.state) || [])].sort();
+    .from('states')
+    .select('name')
+    .order('name');
 
   return {
     ownerType,
     dams: dams || [],
     totalDams: count || 0,
-    states: uniqueStates
+    states: statesData?.map(s => s.name) || []
   };
 }
 
