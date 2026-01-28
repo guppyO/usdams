@@ -42,11 +42,10 @@ export const metadata: Metadata = {
   publisher: 'US Dams Database',
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
       { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icon', type: 'image/png', sizes: '32x32' },
     ],
-    shortcut: '/favicon.ico',
-    apple: '/favicon.svg',
+    apple: '/icon',
   },
   robots: {
     index: true,
