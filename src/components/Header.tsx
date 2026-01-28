@@ -8,16 +8,9 @@ import { SearchBar } from './SearchBar';
 
 const navigation = [
   { name: 'Browse Dams', href: '/browse' },
+  { name: 'By State', href: '/state' },
   {
-    name: 'By Location',
-    href: '#',
-    children: [
-      { name: 'All States', href: '/state' },
-      { name: 'High Hazard by State', href: '/hazard/high' },
-    ],
-  },
-  {
-    name: 'By Classification',
+    name: 'By Hazard',
     href: '#',
     children: [
       { name: 'High Hazard', href: '/hazard/high' },
@@ -58,13 +51,13 @@ export function Header() {
                     <ChevronDown className="h-4 w-4" />
                   </button>
                   {openDropdown === item.name && (
-                    <div className="absolute left-0 top-full pt-2">
-                      <div className="w-48 rounded-lg border border-border bg-card p-2 shadow-lg">
+                    <div className="absolute left-0 top-full z-50 pt-2">
+                      <div className="w-52 rounded-lg border border-border bg-card p-2 shadow-xl">
                         {item.children.map((child) => (
                           <Link
                             key={child.name}
                             href={child.href}
-                            className="block rounded-md px-3 py-2 text-sm text-foreground-secondary hover:bg-muted hover:text-foreground transition-colors"
+                            className="block rounded-md px-3 py-2.5 text-sm text-foreground hover:bg-muted transition-colors"
                           >
                             {child.name}
                           </Link>

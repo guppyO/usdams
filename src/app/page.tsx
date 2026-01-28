@@ -44,8 +44,8 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative text-white py-20 lg:py-32 overflow-hidden">
+      {/* Hero Section - always dark with white text regardless of theme */}
+      <section className="relative py-20 lg:py-32 overflow-hidden">
         {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -53,18 +53,18 @@ export default async function HomePage() {
             backgroundImage: `url('https://images.pexels.com/photos/27505777/pexels-photo-27505777.jpeg?auto=compress&cs=tinysrgb&w=2000')`
           }}
         />
-        {/* Overlay for text readability - lighter to show dam image */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/70" />
+        {/* Overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900/80" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 text-accent mb-6">
               <Waves className="h-4 w-4" />
               <span className="text-sm font-medium">National Inventory of Dams</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-              Explore <span className="text-accent">91,000+</span> Dams Across America
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white">
+              Explore <span className="text-accent">91,000+</span> Dams<br className="hidden sm:inline" /> Across America
             </h1>
-            <p className="text-lg md:text-xl text-primary-foreground/80 mb-10 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto">
               The most comprehensive database of U.S. dams. Search by location, hazard level, purpose, and more. Access safety data, inspection records, and dam specifications.
             </p>
             <div className="max-w-2xl mx-auto">

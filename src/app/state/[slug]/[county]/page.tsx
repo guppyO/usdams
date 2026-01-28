@@ -12,7 +12,7 @@ interface PageProps {
   searchParams: Promise<{ page?: string; hazard?: string }>;
 }
 
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 1000;
 
 async function getCountyData(stateSlug: string, countySlug: string, page: number, hazardFilter?: string) {
   const supabase = createClient(

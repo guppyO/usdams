@@ -13,7 +13,7 @@ interface PageProps {
   searchParams: Promise<{ page?: string; state?: string }>;
 }
 
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 1000;
 
 async function getPurposeData(slug: string, page: number, stateFilter?: string) {
   const supabase = createClient(
@@ -133,7 +133,7 @@ export default async function PurposePage({ params, searchParams }: PageProps) {
                 >
                   All States
                 </Link>
-                {states.slice(0, 20).map((s) => (
+                {states.map((s) => (
                   <Link
                     key={s}
                     href={`/purpose/${slug}?state=${encodeURIComponent(s)}`}

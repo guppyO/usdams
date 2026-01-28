@@ -12,7 +12,7 @@ interface PageProps {
   searchParams: Promise<{ q?: string; page?: string }>;
 }
 
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 1000;
 
 async function searchDams(query: string, page: number) {
   if (!query || query.length < 2) {

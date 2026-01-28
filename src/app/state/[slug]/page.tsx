@@ -17,7 +17,7 @@ interface PageProps {
   searchParams: Promise<{ page?: string; hazard?: string }>;
 }
 
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 1000;
 
 async function getStateData(slug: string, page: number, hazardFilter?: string) {
   const supabase = createClient(
@@ -178,7 +178,7 @@ export default async function StatePage({ params, searchParams }: PageProps) {
               <div className="bg-card rounded-xl border border-border p-5">
                 <h2 className="text-lg font-semibold text-foreground mb-4">Counties</h2>
                 <div className="space-y-1 max-h-80 overflow-y-auto">
-                  {counties.slice(0, 20).map((county) => (
+                  {counties.map((county) => (
                     <Link
                       key={county.id}
                       href={`/state/${slug}/${slugify(county.name)}`}
@@ -188,11 +188,6 @@ export default async function StatePage({ params, searchParams }: PageProps) {
                       <span className="text-muted-foreground font-medium">{county.dam_count}</span>
                     </Link>
                   ))}
-                  {counties.length > 20 && (
-                    <p className="text-sm text-muted-foreground pt-3">
-                      + {counties.length - 20} more counties
-                    </p>
-                  )}
                 </div>
               </div>
             )}

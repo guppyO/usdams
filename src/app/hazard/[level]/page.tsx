@@ -13,7 +13,7 @@ interface PageProps {
   searchParams: Promise<{ page?: string; state?: string }>;
 }
 
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 1000;
 
 const HAZARD_INFO: Record<string, { name: string; description: string; color: string }> = {
   high: {
@@ -136,7 +136,7 @@ export default async function HazardLevelPage({ params, searchParams }: PageProp
                 >
                   All States
                 </Link>
-                {states.slice(0, 20).map((s) => (
+                {states.map((s) => (
                   <Link
                     key={s.slug}
                     href={`/hazard/${level}?state=${encodeURIComponent(s.name)}`}
