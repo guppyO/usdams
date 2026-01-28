@@ -11,39 +11,25 @@ interface NumberTickerProps {
 
 export function NumberTicker({ value, className, delay = 0 }: NumberTickerProps) {
   const [displayValue, setDisplayValue] = useState(0);
-  const [hasStarted, setHasStarted] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasStarted) {
-          setHasStarted(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
+    // If already animated or no value, skip
+    if (hasAnimated || value === 0) return;
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    // Small delay to ensure component is mounted and visible
+    const startTimer = setTimeout(() => {
+      setHasAnimated(true);
 
-    return () => observer.disconnect();
-  }, [hasStarted]);
-
-  useEffect(() => {
-    if (!hasStarted) return;
-
-    const timer = setTimeout(() => {
-      const duration = 2000;
-      const steps = 60;
+      const duration = 1500;
+      const steps = 40;
       const increment = value / steps;
-      let current = 0;
       let step = 0;
 
       const interval = setInterval(() => {
         step++;
-        current = Math.min(Math.round(increment * step), value);
+        const current = Math.min(Math.round(increment * step), value);
         setDisplayValue(current);
 
         if (step >= steps) {
@@ -53,10 +39,17 @@ export function NumberTicker({ value, className, delay = 0 }: NumberTickerProps)
       }, duration / steps);
 
       return () => clearInterval(interval);
-    }, delay);
+    }, delay + 100);
 
-    return () => clearTimeout(timer);
-  }, [hasStarted, value, delay]);
+    return () => clearTimeout(startTimer);
+  }, [value, delay, hasAnimated]);
+
+  // Ensure final value is always correct
+  useEffect(() => {
+    if (hasAnimated && displayValue !== value) {
+      setDisplayValue(value);
+    }
+  }, [value, hasAnimated, displayValue]);
 
   return (
     <span
