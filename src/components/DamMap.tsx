@@ -18,12 +18,7 @@ interface DamPoint {
   state: string | null;
 }
 
-const HAZARD_COLORS: Record<string, string> = {
-  High: '#ef4444',
-  Significant: '#f59e0b',
-  Low: '#22c55e',
-  Undetermined: '#94a3b8',
-};
+const DAM_COLOR = '#3b82f6'; // Blue dot like NID site
 
 export function DamMap() {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -111,20 +106,18 @@ export function DamMap() {
       // Add markers
       for (const dam of allDams) {
         if (!dam.latitude || !dam.longitude) continue;
-        const color = HAZARD_COLORS[dam.hazard_potential || 'Undetermined'] || HAZARD_COLORS.Undetermined;
         const marker = L.circleMarker([dam.latitude, dam.longitude], {
-          radius: 5,
-          fillColor: color,
-          color: '#fff',
+          radius: 4,
+          fillColor: DAM_COLOR,
+          color: DAM_COLOR,
           weight: 1,
-          opacity: 0.8,
-          fillOpacity: 0.8,
+          opacity: 0.7,
+          fillOpacity: 0.6,
         });
         marker.bindPopup(
           `<div style="min-width:180px">
             <strong style="font-size:14px">${dam.name}</strong><br/>
             <span style="color:#666">${dam.state || 'Unknown'}</span><br/>
-            <span style="color:${color};font-weight:600">${dam.hazard_potential || 'Undetermined'} Hazard</span><br/>
             <a href="/dam/${dam.slug}" style="color:#0ea5e9;text-decoration:underline;font-size:13px">View Details →</a>
           </div>`
         );
@@ -157,19 +150,14 @@ export function DamMap() {
         </div>
       )}
 
-      {/* Legend */}
+      {/* Info */}
       {!loading && (
-        <div className="absolute bottom-6 left-4 bg-card/95 backdrop-blur border border-border rounded-lg p-3 z-[1000] shadow-lg">
-          <p className="text-xs font-semibold text-foreground mb-2">Hazard Level</p>
-          <div className="space-y-1">
-            {Object.entries(HAZARD_COLORS).map(([label, color]) => (
-              <div key={label} className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-                <span className="text-xs text-foreground-secondary">{label}</span>
-              </div>
-            ))}
+        <div className="absolute bottom-6 left-4 bg-card/95 backdrop-blur border border-border rounded-lg px-4 py-3 z-[1000] shadow-lg">
+          <div className="flex items-center gap-2">
+            <span className="w-3 h-3 rounded-full" style={{ backgroundColor: DAM_COLOR }} />
+            <span className="text-sm font-medium text-foreground">{damCount.toLocaleString()} Dams</span>
           </div>
-          <p className="text-xs text-muted-foreground mt-2">{damCount.toLocaleString()} dams</p>
+          <p className="text-xs text-muted-foreground mt-1">Click a dam for details</p>
         </div>
       )}
     </div>
