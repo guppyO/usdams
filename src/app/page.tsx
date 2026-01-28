@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
+import Image from 'next/image';
 import { MapPin, AlertTriangle, Droplets, Building2, ArrowRight, Shield, Activity, Waves } from 'lucide-react';
 import { SearchBar } from '@/components/SearchBar';
 import { NumberTicker } from '@/components/NumberTicker';
@@ -46,12 +47,15 @@ export default async function HomePage() {
     <div className="min-h-screen">
       {/* Hero Section - always dark with white text regardless of theme */}
       <section className="relative py-20 lg:py-32 overflow-hidden">
-        {/* Background Image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('https://images.pexels.com/photos/27505777/pexels-photo-27505777.jpeg?auto=compress&cs=tinysrgb&w=2000')`
-          }}
+        {/* Background Image - optimized with Next.js Image */}
+        <Image
+          src="https://images.pexels.com/photos/27505777/pexels-photo-27505777.jpeg?auto=compress&cs=tinysrgb&w=1280"
+          alt="Hoover Dam aerial view"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+          quality={75}
         />
         {/* Overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900/80" />
