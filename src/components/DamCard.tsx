@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { MapPin, AlertTriangle, Ruler, Calendar } from 'lucide-react';
+import { MapPin, Activity, Ruler, Calendar } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface Dam {
@@ -64,7 +64,7 @@ export function DamCard({ dam, showHazard = false }: DamCardProps) {
 
         {dam.primary_purpose && (
           <div className="flex items-center gap-2">
-            <AlertTriangle className="h-4 w-4 shrink-0" />
+            <Activity className="h-4 w-4 shrink-0" />
             <span className="truncate">{dam.primary_purpose}</span>
           </div>
         )}

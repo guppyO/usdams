@@ -9,12 +9,12 @@ export const dynamic = 'force-dynamic';
 
 interface PageProps {
   params: Promise<{ slug: string; county: string }>;
-  searchParams: Promise<{ page?: string; hazard?: string }>;
+  searchParams: Promise<{ page?: string }>;
 }
 
 const PAGE_SIZE = 1000;
 
-async function getCountyData(stateSlug: string, countySlug: string, page: number, hazardFilter?: string) {
+async function getCountyData(stateSlug: string, countySlug: string, page: number) {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -44,42 +44,20 @@ async function getCountyData(stateSlug: string, countySlug: string, page: number
     return null;
   }
 
-  // Build dams query
-  let damsQuery = supabase
+  // Get dams
+  const { data: dams, count } = await supabase
     .from('dams')
     .select('id, name, slug, state, county, hazard_potential, primary_purpose, nid_height_ft, year_completed', { count: 'exact' })
     .eq('state', state.name)
-    .eq('county', county.name);
-
-  if (hazardFilter) {
-    damsQuery = damsQuery.eq('hazard_potential', hazardFilter);
-  }
-
-  const { data: dams, count } = await damsQuery
+    .eq('county', county.name)
     .order('name')
     .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
-
-  // Get hazard counts
-  const [
-    { count: highCount },
-    { count: significantCount },
-    { count: lowCount }
-  ] = await Promise.all([
-    supabase.from('dams').select('*', { count: 'exact', head: true }).eq('state', state.name).eq('county', county.name).eq('hazard_potential', 'High'),
-    supabase.from('dams').select('*', { count: 'exact', head: true }).eq('state', state.name).eq('county', county.name).eq('hazard_potential', 'Significant'),
-    supabase.from('dams').select('*', { count: 'exact', head: true }).eq('state', state.name).eq('county', county.name).eq('hazard_potential', 'Low')
-  ]);
 
   return {
     state,
     county,
     dams: dams || [],
-    totalDams: count || 0,
-    hazardCounts: {
-      high: highCount || 0,
-      significant: significantCount || 0,
-      low: lowCount || 0
-    }
+    totalDams: count || 0
   };
 }
 
@@ -114,22 +92,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: `Dams in ${county.name}, ${state.name}`,
-    description: `Explore ${county.dam_count?.toLocaleString() || 0} dams in ${county.name}, ${state.name}. View dam locations, hazard classifications, and safety information.`,
+    description: `Explore ${county.dam_count?.toLocaleString() || 0} dams in ${county.name}, ${state.name}. View dam locations, purposes, and specifications.`,
   };
 }
 
 export default async function CountyPage({ params, searchParams }: PageProps) {
   const { slug, county: countySlug } = await params;
-  const { page: pageParam, hazard } = await searchParams;
+  const { page: pageParam } = await searchParams;
   const page = parseInt(pageParam || '1', 10);
 
-  const result = await getCountyData(slug, countySlug, page, hazard);
+  const result = await getCountyData(slug, countySlug, page);
 
   if (!result) {
     notFound();
   }
 
-  const { state, county, dams, totalDams, hazardCounts } = result;
+  const { state, county, dams, totalDams } = result;
   const totalPages = Math.ceil(totalDams / PAGE_SIZE);
 
   return (
@@ -154,40 +132,6 @@ export default async function CountyPage({ params, searchParams }: PageProps) {
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
-            {/* Hazard Filter */}
-            <div className="bg-card rounded-xl border border-border p-5">
-              <h2 className="text-lg font-semibold text-foreground mb-4">Filter by Hazard</h2>
-              <div className="space-y-2">
-                <FilterLink
-                  href={`/state/${slug}/${countySlug}`}
-                  active={!hazard}
-                  count={county.dam_count || totalDams}
-                  label="All Dams"
-                />
-                <FilterLink
-                  href={`/state/${slug}/${countySlug}?hazard=High`}
-                  active={hazard === 'High'}
-                  count={hazardCounts.high}
-                  label="High Hazard"
-                  color="text-hazard-high"
-                />
-                <FilterLink
-                  href={`/state/${slug}/${countySlug}?hazard=Significant`}
-                  active={hazard === 'Significant'}
-                  count={hazardCounts.significant}
-                  label="Significant Hazard"
-                  color="text-hazard-significant"
-                />
-                <FilterLink
-                  href={`/state/${slug}/${countySlug}?hazard=Low`}
-                  active={hazard === 'Low'}
-                  count={hazardCounts.low}
-                  label="Low Hazard"
-                  color="text-hazard-low"
-                />
-              </div>
-            </div>
-
             {/* Back to State */}
             <Link
               href={`/state/${slug}`}
@@ -203,7 +147,6 @@ export default async function CountyPage({ params, searchParams }: PageProps) {
             <div className="flex items-center justify-between mb-6">
               <p className="text-muted-foreground">
                 Showing {((page - 1) * PAGE_SIZE) + 1}-{Math.min(page * PAGE_SIZE, totalDams)} of {totalDams.toLocaleString()} dams
-                {hazard && ` (${hazard} hazard)`}
               </p>
             </div>
 
@@ -225,7 +168,7 @@ export default async function CountyPage({ params, searchParams }: PageProps) {
               <div className="flex items-center justify-center gap-2">
                 {page > 1 && (
                   <Link
-                    href={`/state/${slug}/${countySlug}?page=${page - 1}${hazard ? `&hazard=${hazard}` : ''}`}
+                    href={`/state/${slug}/${countySlug}?page=${page - 1}`}
                     className="px-4 py-2 border border-border rounded-lg hover:bg-muted transition-colors"
                   >
                     Previous
@@ -236,7 +179,7 @@ export default async function CountyPage({ params, searchParams }: PageProps) {
                 </span>
                 {page < totalPages && (
                   <Link
-                    href={`/state/${slug}/${countySlug}?page=${page + 1}${hazard ? `&hazard=${hazard}` : ''}`}
+                    href={`/state/${slug}/${countySlug}?page=${page + 1}`}
                     className="px-4 py-2 border border-border rounded-lg hover:bg-muted transition-colors"
                   >
                     Next
@@ -251,28 +194,3 @@ export default async function CountyPage({ params, searchParams }: PageProps) {
   );
 }
 
-function FilterLink({
-  href,
-  active,
-  count,
-  label,
-  color
-}: {
-  href: string;
-  active: boolean;
-  count: number;
-  label: string;
-  color?: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className={`flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
-        active ? 'bg-accent/10 text-accent font-medium' : 'hover:bg-muted'
-      }`}
-    >
-      <span className={`text-base ${color || 'text-foreground'}`}>{label}</span>
-      <span className="text-muted-foreground font-medium">{count.toLocaleString()}</span>
-    </Link>
-  );
-}

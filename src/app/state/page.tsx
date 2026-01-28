@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { MapPin, AlertTriangle } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 
 export const dynamic = 'force-dynamic';
@@ -29,7 +29,6 @@ export default async function StatesPage() {
   const states = await getStates();
 
   const totalDams = states.reduce((acc, state) => acc + (state.dam_count || 0), 0);
-  const totalHighHazard = states.reduce((acc, state) => acc + (state.high_hazard_count || 0), 0);
 
   return (
     <div className="min-h-screen py-8">
@@ -42,7 +41,6 @@ export default async function StatesPage() {
           </h1>
           <p className="text-muted-foreground max-w-2xl">
             Explore {totalDams.toLocaleString()} dams across all U.S. states and territories.
-            {totalHighHazard > 0 && ` Including ${totalHighHazard.toLocaleString()} high hazard dams.`}
           </p>
         </div>
 
@@ -63,17 +61,9 @@ export default async function StatesPage() {
                   </span>
                 )}
               </div>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <MapPin className="h-4 w-4" />
-                  <span>{state.dam_count?.toLocaleString() || 0} dams</span>
-                </div>
-                {state.high_hazard_count > 0 && (
-                  <div className="flex items-center gap-2 text-hazard-high">
-                    <AlertTriangle className="h-4 w-4" />
-                    <span>{state.high_hazard_count?.toLocaleString()} high hazard</span>
-                  </div>
-                )}
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <MapPin className="h-4 w-4" />
+                <span>{state.dam_count?.toLocaleString() || 0} dams</span>
               </div>
             </Link>
           ))}
