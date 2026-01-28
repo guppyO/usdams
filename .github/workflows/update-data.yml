@@ -117,6 +117,26 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: npx tsx scripts/update-county-counts.ts
 
+      - name: Validate ingested data
+        if: steps.download.outputs.has_data == 'true'
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          node -e "
+            const { createClient } = require('@supabase/supabase-js');
+            const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+            (async () => {
+              const { count } = await supabase.from('dams').select('*', { count: 'exact', head: true });
+              console.log('Dam count after ingestion:', count);
+              if (!count || count < 50000) {
+                console.error('VALIDATION FAILED: Expected 50K+ dams, got ' + count);
+                process.exit(1);
+              }
+              console.log('Validation passed.');
+            })();
+          "
+
       - name: Update metadata
         if: steps.download.outputs.has_data == 'true'
         env:

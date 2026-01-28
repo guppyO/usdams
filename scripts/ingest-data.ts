@@ -259,12 +259,12 @@ async function ingestData() {
   for (const state of uniqueStates) {
     const { data, error } = await supabase
       .from('states')
-      .insert({ name: state, slug: slugify(state) })
+      .upsert({ name: state, slug: slugify(state) }, { onConflict: 'slug' })
       .select('id')
       .single();
 
     if (error) {
-      console.error(`  Error inserting state ${state}: ${error.message}`);
+      console.error(`  Error upserting state ${state}: ${error.message}`);
     } else if (data) {
       stateMap.set(state, data.id);
     }
@@ -278,12 +278,12 @@ async function ingestData() {
   for (const purpose of uniquePurposes) {
     const { data, error } = await supabase
       .from('purposes')
-      .insert({ name: purpose, slug: slugify(purpose) })
+      .upsert({ name: purpose, slug: slugify(purpose) }, { onConflict: 'slug' })
       .select('id')
       .single();
 
     if (error) {
-      console.error(`  Error inserting purpose ${purpose}: ${error.message}`);
+      console.error(`  Error upserting purpose ${purpose}: ${error.message}`);
     } else if (data) {
       purposeMap.set(purpose, data.id);
     }
@@ -297,12 +297,12 @@ async function ingestData() {
   for (const ownerType of uniqueOwnerTypes) {
     const { data, error } = await supabase
       .from('owner_types')
-      .insert({ name: ownerType, slug: slugify(ownerType) })
+      .upsert({ name: ownerType, slug: slugify(ownerType) }, { onConflict: 'slug' })
       .select('id')
       .single();
 
     if (error) {
-      console.error(`  Error inserting owner type ${ownerType}: ${error.message}`);
+      console.error(`  Error upserting owner type ${ownerType}: ${error.message}`);
     } else if (data) {
       ownerTypeMap.set(ownerType, data.id);
     }
@@ -324,7 +324,7 @@ async function ingestData() {
           const slug = `${slugify(dam.state)}-${slugify(dam.county)}`;
           const { data, error } = await supabase
             .from('counties')
-            .insert({ name: dam.county, state_id: stateId, slug })
+            .upsert({ name: dam.county, state_id: stateId, slug }, { onConflict: 'slug' })
             .select('id')
             .single();
 
@@ -363,7 +363,7 @@ async function ingestData() {
   for (let i = 0; i < allDams.length; i += BATCH_SIZE) {
     const batch = allDams.slice(i, i + BATCH_SIZE);
 
-    const { error } = await supabase.from('dams').insert(batch);
+    const { error } = await supabase.from('dams').upsert(batch, { onConflict: 'nid_id' });
 
     if (error) {
       console.error(`  Batch ${Math.floor(i / BATCH_SIZE) + 1} error: ${error.message}`);
