@@ -29,7 +29,7 @@ const footerLinks = {
 export async function Footer() {
   const stats = await getStats();
   return (
-    <footer className="border-t border-border bg-background-secondary">
+    <footer className="border-t border-border bg-white dark:bg-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           {/* Brand */}
