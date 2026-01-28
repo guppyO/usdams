@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Waves } from 'lucide-react';
+import { Waves, RefreshCw } from 'lucide-react';
 
 const footerLinks = {
   browse: [
@@ -93,8 +93,26 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Data Freshness */}
+        <div className="mt-8 flex justify-center">
+          <div className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2 text-sm">
+            <RefreshCw className="h-4 w-4 text-accent" />
+            <span className="text-foreground-secondary">
+              Data updated weekly from{' '}
+              <a
+                href="https://nid.sec.usace.army.mil/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent hover:underline"
+              >
+                NID
+              </a>
+            </span>
+          </div>
+        </div>
+
         {/* Bottom */}
-        <div className="mt-12 border-t border-border pt-8">
+        <div className="mt-8 border-t border-border pt-8">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <p className="text-sm text-foreground-secondary">
               Data sourced from the U.S. Army Corps of Engineers National Inventory of Dams (NID).

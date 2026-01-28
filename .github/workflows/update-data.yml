@@ -1,0 +1,107 @@
+name: Update Dam Data
+
+on:
+  schedule:
+    # Run weekly on Sunday at 2 AM UTC
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+    # Allow manual trigger
+
+jobs:
+  check-and-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check for data updates
+        id: check-data
+        run: |
+          # Download the NID data and check if it's different
+          echo "Checking for NID data updates..."
+
+          # Get the current date for comparison
+          CURRENT_DATE=$(date +%Y-%m-%d)
+          echo "Current date: $CURRENT_DATE"
+
+          # Create data directory if it doesn't exist
+          mkdir -p data
+
+          # Download the latest NID data
+          echo "Downloading latest NID data..."
+          curl -L -o data/nation_new.csv "https://nid.sec.usace.army.mil/api/nation/csv" || {
+            echo "Failed to download data"
+            exit 1
+          }
+
+          # Check if we have existing data to compare
+          if [ -f "data/nation.csv" ]; then
+            # Compare file sizes and checksums
+            NEW_SIZE=$(wc -c < data/nation_new.csv)
+            OLD_SIZE=$(wc -c < data/nation.csv)
+            NEW_HASH=$(md5sum data/nation_new.csv | cut -d' ' -f1)
+            OLD_HASH=$(md5sum data/nation.csv | cut -d' ' -f1)
+
+            echo "Old file size: $OLD_SIZE bytes, hash: $OLD_HASH"
+            echo "New file size: $NEW_SIZE bytes, hash: $NEW_HASH"
+
+            if [ "$NEW_HASH" = "$OLD_HASH" ]; then
+              echo "Data is unchanged"
+              echo "data_changed=false" >> $GITHUB_OUTPUT
+              rm data/nation_new.csv
+            else
+              echo "Data has changed!"
+              echo "data_changed=true" >> $GITHUB_OUTPUT
+              mv data/nation_new.csv data/nation.csv
+            fi
+          else
+            echo "No existing data, treating as new"
+            echo "data_changed=true" >> $GITHUB_OUTPUT
+            mv data/nation_new.csv data/nation.csv
+          fi
+
+      - name: Run data ingestion
+        if: steps.check-data.outputs.data_changed == 'true'
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          echo "Running data ingestion..."
+          npx tsx scripts/ingest-data.ts
+
+      - name: Update county counts
+        if: steps.check-data.outputs.data_changed == 'true'
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          echo "Updating county counts..."
+          npx tsx scripts/update-county-counts.ts
+
+      - name: Trigger Vercel redeploy
+        if: steps.check-data.outputs.data_changed == 'true'
+        run: |
+          echo "Data updated! Vercel will automatically redeploy on next push."
+          echo "If you need immediate redeploy, trigger it manually in Vercel dashboard."
+
+      - name: Create summary
+        run: |
+          echo "## Data Update Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.check-data.outputs.data_changed }}" == "true" ]; then
+            echo "✅ Data was updated and ingested successfully" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ No data changes detected" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Run completed at: $(date)" >> $GITHUB_STEP_SUMMARY
