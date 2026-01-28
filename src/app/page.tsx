@@ -232,13 +232,13 @@ export default async function HomePage() {
         <InContentAd />
       </div>
 
-      {/* CTA Section - always dark regardless of theme */}
-      <section className="py-20 bg-slate-900 text-white">
+      {/* CTA Section */}
+      <section className="py-20 bg-muted/50 dark:bg-slate-900">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
             Find Dams Near You
           </h2>
-          <p className="text-white/80 mb-8 max-w-xl mx-auto">
+          <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
             Search our database of over {stats.totalDams.toLocaleString()} dams to find safety information, inspection records, and detailed specifications.
           </p>
           <Link
