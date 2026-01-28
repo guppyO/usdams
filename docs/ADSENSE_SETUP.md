@@ -6,8 +6,7 @@ Before applying for AdSense, ensure:
 
 - [x] Privacy Policy page exists at `/privacy`
 - [x] Terms of Service page exists at `/terms`
-- [x] About page with contact info exists at `/about`
-- [x] Contact email configured: `contact@usdamsdata.com`
+- [x] About page exists at `/about`
 - [x] Sufficient unique content (91,000+ dam pages)
 - [x] Site is live and accessible
 - [x] No prohibited content
@@ -86,9 +85,3 @@ After setup, verify at:
 - `https://usdamsdata.com/ads.txt` - Should show your publisher ID
 - AdSense dashboard - Check for "ads.txt status" under Sites
 
-## Email Setup Required
-
-You need to set up email forwarding for `contact@usdamsdata.com`:
-1. Go to your domain registrar (where you bought usdamsdata.com)
-2. Set up email forwarding from `contact@usdamsdata.com` to your personal email
-3. Or use a service like Zoho Mail, Google Workspace, or Cloudflare Email Routing

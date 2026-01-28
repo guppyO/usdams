@@ -138,16 +138,19 @@ export default function TermsPage() {
         </section>
 
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold text-foreground">Contact</h2>
+          <h2 className="text-xl font-semibold text-foreground">Data Source</h2>
           <p className="text-foreground-secondary">
-            For questions about these Terms of Use, please contact us at{' '}
+            For questions about specific dam data or to report data inaccuracies, please contact
+            the{' '}
             <a
-              href="mailto:contact@usdamsdata.com"
+              href="https://nid.sec.usace.army.mil/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-accent underline underline-offset-2 hover:text-accent/80"
             >
-              contact@usdamsdata.com
+              U.S. Army Corps of Engineers National Inventory of Dams
             </a>
-            .
+            {' '}directly.
           </p>
         </section>
       </div>
