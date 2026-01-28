@@ -23,11 +23,11 @@
   --secondary: #3b82f6;
   --secondary-foreground: #ffffff;
 
-  /* Hazard colors */
-  --hazard-high: #dc2626;
-  --hazard-significant: #f59e0b;
-  --hazard-low: #22c55e;
-  --hazard-undetermined: #6b7280;
+  /* Hazard colors - WCAG AA compliant (4.5:1+ contrast on white) */
+  --hazard-high: #b91c1c;
+  --hazard-significant: #b45309;
+  --hazard-low: #15803d;
+  --hazard-undetermined: #4b5563;
 
   /* UI colors */
   --border: #e2e8f0;
@@ -64,8 +64,8 @@
   --secondary: #60a5fa;
   --secondary-foreground: #0f172a;
 
-  /* Hazard colors (slightly adjusted for dark mode) */
-  --hazard-high: #ef4444;
+  /* Hazard colors - WCAG AA compliant for dark mode */
+  --hazard-high: #f87171;
   --hazard-significant: #fbbf24;
   --hazard-low: #4ade80;
   --hazard-undetermined: #9ca3af;
