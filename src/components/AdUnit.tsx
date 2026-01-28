@@ -25,7 +25,7 @@ export function AdUnit({ slot, format = 'auto', className = '' }: AdUnitProps) {
 
   return (
     <div
-      className={`bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 dark:text-gray-500 text-sm border border-dashed border-gray-300 dark:border-gray-700 ${className}`}
+      className={`bg-muted/50 rounded-lg flex items-center justify-center text-muted-foreground text-sm border border-dashed border-border ${className}`}
       style={{ minHeight: getMinHeight() }}
       data-ad-slot={slot}
     >
