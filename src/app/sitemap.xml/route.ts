@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 export const dynamic = 'force-dynamic';
 
 const ITEMS_PER_SITEMAP = 10000;
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://usdams.com';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://usdamsdata.com';
 
 export async function GET() {
   const supabase = createClient(

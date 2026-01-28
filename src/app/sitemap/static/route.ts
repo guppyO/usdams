@@ -2,12 +2,13 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://usdams.com';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://usdamsdata.com';
 
 export async function GET() {
   const staticPages = [
     { loc: '/', priority: 1.0, changefreq: 'daily' },
     { loc: '/browse', priority: 0.9, changefreq: 'daily' },
+    { loc: '/map', priority: 0.9, changefreq: 'weekly' },
     { loc: '/state', priority: 0.9, changefreq: 'weekly' },
     { loc: '/hazard/high', priority: 0.8, changefreq: 'weekly' },
     { loc: '/hazard/significant', priority: 0.8, changefreq: 'weekly' },
