@@ -23,11 +23,11 @@
   --secondary: #3b82f6;
   --secondary-foreground: #ffffff;
 
-  /* Hazard colors - WCAG AA compliant (4.5:1+ contrast on white) */
-  --hazard-high: #b91c1c;
-  --hazard-significant: #b45309;
-  --hazard-low: #15803d;
-  --hazard-undetermined: #4b5563;
+  /* Hazard colors - WCAG AA compliant (4.5:1+ contrast with white text) */
+  --hazard-high: #991b1b;
+  --hazard-significant: #92400e;
+  --hazard-low: #166534;
+  --hazard-undetermined: #374151;
 
   /* UI colors */
   --border: #e2e8f0;
