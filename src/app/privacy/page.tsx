@@ -109,7 +109,14 @@ export default function PrivacyPage() {
           <h2 className="text-xl font-semibold text-foreground">Contact Us</h2>
           <p className="text-foreground-secondary">
             If you have questions about this privacy policy or our data practices, please contact
-            us through our website.
+            us at{' '}
+            <a
+              href="mailto:contact@usdamsdata.com"
+              className="text-accent underline underline-offset-2 hover:text-accent/80"
+            >
+              contact@usdamsdata.com
+            </a>
+            .
           </p>
         </section>
       </div>

@@ -140,7 +140,14 @@ export default function TermsPage() {
         <section className="space-y-4">
           <h2 className="text-xl font-semibold text-foreground">Contact</h2>
           <p className="text-foreground-secondary">
-            For questions about these Terms of Use, please contact us through our website.
+            For questions about these Terms of Use, please contact us at{' '}
+            <a
+              href="mailto:contact@usdamsdata.com"
+              className="text-accent underline underline-offset-2 hover:text-accent/80"
+            >
+              contact@usdamsdata.com
+            </a>
+            .
           </p>
         </section>
       </div>

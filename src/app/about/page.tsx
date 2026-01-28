@@ -138,6 +138,35 @@ export default async function AboutPage() {
             {' '}for more information about how we handle data and your use of this website.
           </p>
         </section>
+
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground">Contact Us</h2>
+          <p className="text-foreground-secondary">
+            Have questions, feedback, or found an error in our data? We&apos;d love to hear from you.
+          </p>
+          <p className="text-foreground-secondary">
+            <strong>Email:</strong>{' '}
+            <a
+              href="mailto:contact@usdamsdata.com"
+              className="text-accent underline underline-offset-2 hover:text-accent/80"
+            >
+              contact@usdamsdata.com
+            </a>
+          </p>
+          <p className="text-foreground-secondary text-sm">
+            Please note that we cannot provide official dam safety information or emergency guidance.
+            For urgent matters, contact your local emergency management office or the{' '}
+            <a
+              href="https://nid.sec.usace.army.mil/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent underline underline-offset-2 hover:text-accent/80"
+            >
+              U.S. Army Corps of Engineers
+            </a>
+            .
+          </p>
+        </section>
       </div>
     </div>
   );
