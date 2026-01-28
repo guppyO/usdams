@@ -199,7 +199,7 @@ export function SearchBar({ size = 'default' }: SearchBarProps) {
                 router.push(`/search?q=${encodeURIComponent(query)}`);
                 setIsOpen(false);
               }}
-              className="text-xs text-accent hover:underline"
+              className="text-xs text-accent underline underline-offset-2 hover:text-accent/80"
             >
               View all results for "{query}"
             </button>

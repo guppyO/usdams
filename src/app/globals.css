@@ -15,7 +15,8 @@
   --primary-foreground: #ffffff;
 
   /* Accent colors - Cyan (water theme) - WCAG AA compliant */
-  --accent: #0891b2;
+  /* Using cyan-700 (#0e7490) for better contrast on white backgrounds */
+  --accent: #0e7490;
   --accent-foreground: #ffffff;
   --accent-light: #ecfeff;
 
