@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { MapPin, AlertTriangle, Droplets, Building2, ArrowRight, Shield, Activity, Waves } from 'lucide-react';
 import { SearchBar } from '@/components/SearchBar';
 import { NumberTicker } from '@/components/NumberTicker';
+import { LeaderboardAd, InContentAd } from '@/components/AdUnit';
 
 export const dynamic = 'force-dynamic';
 
@@ -44,9 +45,17 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary via-primary/95 to-primary/90 text-primary-foreground py-20 lg:py-32">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
-        <div className="container mx-auto px-4 relative">
+      <section className="relative text-white py-20 lg:py-32 overflow-hidden">
+        {/* Background Image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('https://images.unsplash.com/photo-1548877935-507f65f0b91c?auto=format&fit=crop&w=2000&q=80')`
+          }}
+        />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-900/85 to-primary/80" />
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 text-accent mb-6">
               <Waves className="h-4 w-4" />
@@ -64,6 +73,11 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Ad - Below Hero */}
+      <div className="container mx-auto px-4 py-6">
+        <LeaderboardAd />
+      </div>
 
       {/* Stats Section */}
       <section className="py-16 bg-muted/50">
@@ -243,6 +257,11 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Ad - Before CTA */}
+      <div className="container mx-auto px-4 py-6">
+        <InContentAd />
+      </div>
 
       {/* CTA Section */}
       <section className="py-20 bg-primary text-primary-foreground">

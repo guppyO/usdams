@@ -8,13 +8,15 @@ export async function GET() {
   const staticPages = [
     { loc: '/', priority: 1.0, changefreq: 'daily' },
     { loc: '/browse', priority: 0.9, changefreq: 'daily' },
-    { loc: '/states', priority: 0.9, changefreq: 'weekly' },
+    { loc: '/state', priority: 0.9, changefreq: 'weekly' },
     { loc: '/hazard/high', priority: 0.8, changefreq: 'weekly' },
     { loc: '/hazard/significant', priority: 0.8, changefreq: 'weekly' },
     { loc: '/hazard/low', priority: 0.7, changefreq: 'weekly' },
     { loc: '/purpose', priority: 0.8, changefreq: 'weekly' },
-    { loc: '/owner-type', priority: 0.8, changefreq: 'weekly' },
+    { loc: '/owner', priority: 0.8, changefreq: 'weekly' },
     { loc: '/about', priority: 0.5, changefreq: 'monthly' },
+    { loc: '/privacy', priority: 0.3, changefreq: 'yearly' },
+    { loc: '/terms', priority: 0.3, changefreq: 'yearly' },
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

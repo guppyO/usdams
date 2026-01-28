@@ -155,8 +155,8 @@ export default async function CountyPage({ params, searchParams }: PageProps) {
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             {/* Hazard Filter */}
-            <div className="bg-card rounded-lg border border-border p-4">
-              <h2 className="font-semibold text-foreground mb-3">Filter by Hazard</h2>
+            <div className="bg-card rounded-xl border border-border p-5">
+              <h2 className="text-lg font-semibold text-foreground mb-4">Filter by Hazard</h2>
               <div className="space-y-2">
                 <FilterLink
                   href={`/state/${slug}/${countySlug}`}
@@ -191,9 +191,9 @@ export default async function CountyPage({ params, searchParams }: PageProps) {
             {/* Back to State */}
             <Link
               href={`/state/${slug}`}
-              className="block p-4 bg-card rounded-lg border border-border hover:border-accent transition-colors text-center"
+              className="block px-4 py-4 bg-card rounded-xl border border-border hover:border-accent transition-colors text-center"
             >
-              <span className="text-accent font-medium">← Back to {state.name}</span>
+              <span className="text-accent font-medium text-base">← Back to {state.name}</span>
             </Link>
           </div>
 
@@ -267,12 +267,12 @@ function FilterLink({
   return (
     <Link
       href={href}
-      className={`flex items-center justify-between p-2 rounded transition-colors ${
-        active ? 'bg-accent/10 text-accent' : 'hover:bg-muted'
+      className={`flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
+        active ? 'bg-accent/10 text-accent font-medium' : 'hover:bg-muted'
       }`}
     >
-      <span className={color || 'text-foreground'}>{label}</span>
-      <span className="text-muted-foreground text-sm">{count.toLocaleString()}</span>
+      <span className={`text-base ${color || 'text-foreground'}`}>{label}</span>
+      <span className="text-muted-foreground font-medium">{count.toLocaleString()}</span>
     </Link>
   );
 }

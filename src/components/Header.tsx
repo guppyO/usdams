@@ -12,8 +12,8 @@ const navigation = [
     name: 'By Location',
     href: '#',
     children: [
-      { name: 'States', href: '/states' },
-      { name: 'Counties', href: '/counties' },
+      { name: 'All States', href: '/state' },
+      { name: 'High Hazard by State', href: '/hazard/high' },
     ],
   },
   {
@@ -26,7 +26,7 @@ const navigation = [
     ],
   },
   { name: 'By Purpose', href: '/purpose' },
-  { name: 'By Owner Type', href: '/owner-type' },
+  { name: 'By Owner Type', href: '/owner' },
 ];
 
 export function Header() {

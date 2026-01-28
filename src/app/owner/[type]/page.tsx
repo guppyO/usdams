@@ -124,12 +124,12 @@ export default async function OwnerTypePage({ params, searchParams }: PageProps)
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             {/* State Filter */}
-            <div className="bg-card rounded-lg border border-border p-4">
-              <h2 className="font-semibold text-foreground mb-3">Filter by State</h2>
-              <div className="space-y-1 max-h-64 overflow-y-auto">
+            <div className="bg-card rounded-xl border border-border p-5">
+              <h2 className="text-lg font-semibold text-foreground mb-4">Filter by State</h2>
+              <div className="space-y-1 max-h-80 overflow-y-auto">
                 <Link
                   href={`/owner/${type}`}
-                  className={`block p-2 rounded transition-colors ${!state ? 'bg-accent/10 text-accent' : 'hover:bg-muted'}`}
+                  className={`block px-4 py-3 rounded-lg transition-colors text-base ${!state ? 'bg-accent/10 text-accent font-medium' : 'hover:bg-muted'}`}
                 >
                   All States
                 </Link>
@@ -137,7 +137,7 @@ export default async function OwnerTypePage({ params, searchParams }: PageProps)
                   <Link
                     key={s}
                     href={`/owner/${type}?state=${encodeURIComponent(s)}`}
-                    className={`block p-2 rounded transition-colors text-sm ${state === s ? 'bg-accent/10 text-accent' : 'hover:bg-muted'}`}
+                    className={`block px-4 py-3 rounded-lg transition-colors ${state === s ? 'bg-accent/10 text-accent font-medium' : 'hover:bg-muted'}`}
                   >
                     {s}
                   </Link>
@@ -148,9 +148,9 @@ export default async function OwnerTypePage({ params, searchParams }: PageProps)
             {/* Back Link */}
             <Link
               href="/owner"
-              className="block p-4 bg-card rounded-lg border border-border hover:border-accent transition-colors text-center"
+              className="block px-4 py-4 bg-card rounded-xl border border-border hover:border-accent transition-colors text-center"
             >
-              <span className="text-accent font-medium">← All Owner Types</span>
+              <span className="text-accent font-medium text-base">← All Owner Types</span>
             </Link>
           </div>
 

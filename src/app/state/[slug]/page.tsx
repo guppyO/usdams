@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { DamCard } from '@/components/DamCard';
+import { SidebarAd } from '@/components/AdUnit';
 
 function slugify(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
@@ -139,8 +140,8 @@ export default async function StatePage({ params, searchParams }: PageProps) {
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             {/* Hazard Filter */}
-            <div className="bg-card rounded-lg border border-border p-4">
-              <h2 className="font-semibold text-foreground mb-3">Filter by Hazard</h2>
+            <div className="bg-card rounded-xl border border-border p-5">
+              <h2 className="text-lg font-semibold text-foreground mb-4">Filter by Hazard</h2>
               <div className="space-y-2">
                 <FilterLink
                   href={`/state/${slug}`}
@@ -174,27 +175,30 @@ export default async function StatePage({ params, searchParams }: PageProps) {
 
             {/* Counties */}
             {counties.length > 0 && (
-              <div className="bg-card rounded-lg border border-border p-4">
-                <h2 className="font-semibold text-foreground mb-3">Counties</h2>
-                <div className="space-y-1 max-h-64 overflow-y-auto">
+              <div className="bg-card rounded-xl border border-border p-5">
+                <h2 className="text-lg font-semibold text-foreground mb-4">Counties</h2>
+                <div className="space-y-1 max-h-80 overflow-y-auto">
                   {counties.slice(0, 20).map((county) => (
                     <Link
                       key={county.id}
                       href={`/state/${slug}/${slugify(county.name)}`}
-                      className="flex items-center justify-between p-2 rounded hover:bg-muted transition-colors text-sm"
+                      className="flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-muted transition-colors"
                     >
                       <span className="text-foreground">{county.name}</span>
-                      <span className="text-muted-foreground">{county.dam_count}</span>
+                      <span className="text-muted-foreground font-medium">{county.dam_count}</span>
                     </Link>
                   ))}
                   {counties.length > 20 && (
-                    <p className="text-xs text-muted-foreground pt-2">
+                    <p className="text-sm text-muted-foreground pt-3">
                       + {counties.length - 20} more counties
                     </p>
                   )}
                 </div>
               </div>
             )}
+
+            {/* Ad Unit */}
+            <SidebarAd />
           </div>
 
           {/* Main Content */}
@@ -261,12 +265,12 @@ function FilterLink({
   return (
     <Link
       href={href}
-      className={`flex items-center justify-between p-2 rounded transition-colors ${
-        active ? 'bg-accent/10 text-accent' : 'hover:bg-muted'
+      className={`flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
+        active ? 'bg-accent/10 text-accent font-medium' : 'hover:bg-muted'
       }`}
     >
-      <span className={color || 'text-foreground'}>{label}</span>
-      <span className="text-muted-foreground text-sm">{count.toLocaleString()}</span>
+      <span className={`text-base ${color || 'text-foreground'}`}>{label}</span>
+      <span className="text-muted-foreground font-medium">{count.toLocaleString()}</span>
     </Link>
   );
 }

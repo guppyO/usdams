@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { DamCard } from '@/components/DamCard';
+import { SidebarAd } from '@/components/AdUnit';
 import { cn } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
@@ -237,6 +238,42 @@ export default async function DamPage({ params }: PageProps) {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {/* Map */}
+            {dam.latitude && dam.longitude && (
+              <div className="bg-card rounded-lg border border-border overflow-hidden">
+                <div className="aspect-[4/3] w-full">
+                  <iframe
+                    title={`Map showing ${dam.name || 'dam'} location`}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${dam.longitude - 0.02},${dam.latitude - 0.015},${dam.longitude + 0.02},${dam.latitude + 0.015}&layer=mapnik&marker=${dam.latitude},${dam.longitude}`}
+                  />
+                </div>
+                <div className="p-3 flex justify-center gap-4">
+                  <a
+                    href={`https://www.google.com/maps?q=${dam.latitude},${dam.longitude}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-accent hover:underline inline-flex items-center gap-1"
+                  >
+                    Google Maps
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                  <a
+                    href={`https://www.openstreetmap.org/?mlat=${dam.latitude}&mlon=${dam.longitude}#map=15/${dam.latitude}/${dam.longitude}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-accent hover:underline inline-flex items-center gap-1"
+                  >
+                    OpenStreetMap
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                </div>
+              </div>
+            )}
+
             {/* Location Info */}
             <div className="bg-card rounded-lg border border-border p-6">
               <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
@@ -247,15 +284,9 @@ export default async function DamPage({ params }: PageProps) {
                 {dam.latitude && dam.longitude && (
                   <div>
                     <span className="text-muted-foreground">Coordinates: </span>
-                    <a
-                      href={`https://www.google.com/maps?q=${dam.latitude},${dam.longitude}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-accent hover:underline inline-flex items-center gap-1"
-                    >
+                    <span className="font-mono text-foreground">
                       {dam.latitude.toFixed(6)}, {dam.longitude.toFixed(6)}
-                      <ExternalLink className="h-3 w-3" />
-                    </a>
+                    </span>
                   </div>
                 )}
                 <div>
@@ -342,6 +373,9 @@ export default async function DamPage({ params }: PageProps) {
                 )}
               </div>
             </div>
+
+            {/* Ad Unit */}
+            <SidebarAd />
           </div>
         </div>
 

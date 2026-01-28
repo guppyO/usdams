@@ -5,16 +5,16 @@ const footerLinks = {
   browse: [
     { name: 'All Dams', href: '/browse' },
     { name: 'High Hazard Dams', href: '/hazard/high' },
-    { name: 'By State', href: '/states' },
+    { name: 'By State', href: '/state' },
     { name: 'By Purpose', href: '/purpose' },
-    { name: 'By Owner Type', href: '/owner-type' },
+    { name: 'By Owner Type', href: '/owner' },
   ],
   states: [
     { name: 'Texas', href: '/state/texas' },
     { name: 'California', href: '/state/california' },
     { name: 'Ohio', href: '/state/ohio' },
     { name: 'Kansas', href: '/state/kansas' },
-    { name: 'All States', href: '/states' },
+    { name: 'All States', href: '/state' },
   ],
   resources: [
     { name: 'About', href: '/about' },

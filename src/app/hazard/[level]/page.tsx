@@ -127,12 +127,12 @@ export default async function HazardLevelPage({ params, searchParams }: PageProp
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             {/* State Filter */}
-            <div className="bg-card rounded-lg border border-border p-4">
-              <h2 className="font-semibold text-foreground mb-3">Filter by State</h2>
-              <div className="space-y-1 max-h-64 overflow-y-auto">
+            <div className="bg-card rounded-xl border border-border p-5">
+              <h2 className="text-lg font-semibold text-foreground mb-4">Filter by State</h2>
+              <div className="space-y-1 max-h-80 overflow-y-auto">
                 <Link
                   href={`/hazard/${level}`}
-                  className={`block p-2 rounded transition-colors ${!state ? 'bg-accent/10 text-accent' : 'hover:bg-muted'}`}
+                  className={`block px-4 py-3 rounded-lg transition-colors text-base ${!state ? 'bg-accent/10 text-accent font-medium' : 'hover:bg-muted'}`}
                 >
                   All States
                 </Link>
@@ -140,7 +140,7 @@ export default async function HazardLevelPage({ params, searchParams }: PageProp
                   <Link
                     key={s.slug}
                     href={`/hazard/${level}?state=${encodeURIComponent(s.name)}`}
-                    className={`block p-2 rounded transition-colors text-sm ${state === s.name ? 'bg-accent/10 text-accent' : 'hover:bg-muted'}`}
+                    className={`block px-4 py-3 rounded-lg transition-colors ${state === s.name ? 'bg-accent/10 text-accent font-medium' : 'hover:bg-muted'}`}
                   >
                     {s.name}
                   </Link>
@@ -149,18 +149,18 @@ export default async function HazardLevelPage({ params, searchParams }: PageProp
             </div>
 
             {/* Other Hazard Levels */}
-            <div className="bg-card rounded-lg border border-border p-4">
-              <h2 className="font-semibold text-foreground mb-3">Other Classifications</h2>
+            <div className="bg-card rounded-xl border border-border p-5">
+              <h2 className="text-lg font-semibold text-foreground mb-4">Other Classifications</h2>
               <div className="space-y-2">
                 {Object.entries(HAZARD_INFO).map(([slug, info]) => (
                   slug !== level.toLowerCase() && (
                     <Link
                       key={slug}
                       href={`/hazard/${slug}`}
-                      className="flex items-center gap-2 p-2 rounded hover:bg-muted transition-colors text-sm"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted transition-colors"
                     >
-                      <span className={`w-3 h-3 rounded-full ${info.color}`} />
-                      {info.name} Hazard
+                      <span className={`w-4 h-4 rounded-full ${info.color}`} />
+                      <span className="text-base">{info.name} Hazard</span>
                     </Link>
                   )
                 ))}
