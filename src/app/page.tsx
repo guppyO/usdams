@@ -14,7 +14,7 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section - always dark with white text regardless of theme */}
-      <section className="relative py-20 lg:py-32 overflow-hidden">
+      <section className="relative py-20 lg:py-32 overflow-x-clip">
         {/* Background Image - optimized with Next.js Image */}
         <Image
           src="https://images.pexels.com/photos/27505777/pexels-photo-27505777.jpeg?auto=compress&cs=tinysrgb&w=1280"
@@ -232,13 +232,13 @@ export default async function HomePage() {
         <InContentAd />
       </div>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
+      {/* CTA Section - always dark regardless of theme */}
+      <section className="py-20 bg-slate-900 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
             Find Dams Near You
           </h2>
-          <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">
+          <p className="text-white/80 mb-8 max-w-xl mx-auto">
             Search our database of over {stats.totalDams.toLocaleString()} dams to find safety information, inspection records, and detailed specifications.
           </p>
           <Link

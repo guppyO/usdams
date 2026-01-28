@@ -5,6 +5,7 @@ import { getStats } from '@/lib/supabase';
 const footerLinks = {
   browse: [
     { name: 'All Dams', href: '/browse' },
+    { name: 'Dam Map', href: '/map' },
     { name: 'High Hazard Dams', href: '/hazard/high' },
     { name: 'By State', href: '/state' },
     { name: 'By Purpose', href: '/purpose' },

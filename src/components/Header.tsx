@@ -8,6 +8,7 @@ import { SearchBar } from './SearchBar';
 
 const navigation = [
   { name: 'Browse Dams', href: '/browse' },
+  { name: 'Dam Map', href: '/map' },
   { name: 'By State', href: '/state' },
   {
     name: 'By Hazard',
