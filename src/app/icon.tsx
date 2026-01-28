@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const size = { width: 32, height: 32 };
+export const size = { width: 48, height: 48 };
 export const contentType = 'image/png';
 
 // Water waves design - matches public/favicon.svg
@@ -16,13 +16,13 @@ export default function Icon() {
           alignItems: 'center',
           justifyContent: 'center',
           background: '#0f172a',
-          borderRadius: 6,
+          borderRadius: 8,
         }}
       >
         {/* Water waves icon */}
         <svg
-          width="24"
-          height="24"
+          width="36"
+          height="36"
           viewBox="0 0 32 32"
           fill="none"
         >
