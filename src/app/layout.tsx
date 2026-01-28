@@ -87,7 +87,7 @@ export const metadata: Metadata = {
     canonical: siteUrl,
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || '',
+    google: 'JG4lGon_1fMuzWooVG1H1UtwvdE1XlqoRWthg9vJpJM',
   },
 };
 
@@ -113,12 +113,12 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* Google AdSense - Uncomment and add your publisher ID when approved */}
-        {/* <script
+        {/* Google AdSense */}
+        <script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1226435955298586"
           crossOrigin="anonymous"
-        /> */}
+        />
       </head>
       <body className={`${inter.variable} font-sans antialiased min-h-screen flex flex-col bg-background text-foreground`}>
         <ThemeProvider>
