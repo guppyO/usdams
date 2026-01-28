@@ -1,16 +1,49 @@
 import { MetadataRoute } from 'next';
 
-export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://usdamsdata.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://usdamsdata.com';
 
+export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
+      // Googlebot-specific rules (prioritized)
+      {
+        userAgent: 'Googlebot',
+        allow: ['/', '/dam/', '/state/', '/county/', '/hazard/', '/purpose/', '/owner/', '/browse/', '/search'],
+        disallow: ['/api/', '/admin/'],
+      },
+      // Default rules for all other bots
       {
         userAgent: '*',
         allow: '/',
         disallow: ['/api/', '/admin/'],
       },
+      // Block AI training bots
+      {
+        userAgent: 'GPTBot',
+        disallow: ['/'],
+      },
+      {
+        userAgent: 'ChatGPT-User',
+        disallow: ['/'],
+      },
+      {
+        userAgent: 'CCBot',
+        disallow: ['/'],
+      },
+      {
+        userAgent: 'Google-Extended',
+        disallow: ['/'],
+      },
+      {
+        userAgent: 'anthropic-ai',
+        disallow: ['/'],
+      },
+      {
+        userAgent: 'ClaudeBot',
+        disallow: ['/'],
+      },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    // Only link to sitemap INDEX - Google discovers sub-sitemaps automatically
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }
