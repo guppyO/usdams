@@ -137,12 +137,9 @@ export default async function HomePage() {
                 <h3 className="font-semibold text-foreground group-hover:text-accent transition-colors truncate">
                   {state.name}
                 </h3>
-                <div className="flex items-center justify-between mt-2 text-sm">
-                  <span className="text-muted-foreground">{state.dam_count?.toLocaleString()} dams</span>
-                  {state.high_hazard_count > 0 && (
-                    <span className="text-hazard-high text-xs">{state.high_hazard_count} high</span>
-                  )}
-                </div>
+                <p className="text-sm text-muted-foreground mt-2">
+                  {state.dam_count?.toLocaleString()} dams
+                </p>
               </Link>
             ))}
           </div>
