@@ -50,11 +50,11 @@ export default async function HomePage() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1548877935-507f65f0b91c?auto=format&fit=crop&w=2000&q=80')`
+            backgroundImage: `url('https://images.pexels.com/photos/6333846/pexels-photo-6333846.jpeg?auto=compress&cs=tinysrgb&w=2000')`
           }}
         />
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-900/85 to-primary/80" />
+        {/* Overlay for text readability - lighter to show dam image */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/70" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 text-accent mb-6">
@@ -67,8 +67,8 @@ export default async function HomePage() {
             <p className="text-lg md:text-xl text-primary-foreground/80 mb-10 max-w-2xl mx-auto">
               The most comprehensive database of U.S. dams. Search by location, hazard level, purpose, and more. Access safety data, inspection records, and dam specifications.
             </p>
-            <div className="max-w-xl mx-auto">
-              <SearchBar />
+            <div className="max-w-2xl mx-auto">
+              <SearchBar size="large" />
             </div>
           </div>
         </div>

@@ -14,7 +14,12 @@ interface SearchResult {
   hazard_potential: string;
 }
 
-export function SearchBar() {
+interface SearchBarProps {
+  size?: 'default' | 'large';
+}
+
+export function SearchBar({ size = 'default' }: SearchBarProps) {
+  const isLarge = size === 'large';
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -123,9 +128,12 @@ export function SearchBar() {
   };
 
   return (
-    <div className="relative w-full max-w-sm">
+    <div className={clsx("relative w-full", isLarge ? "max-w-2xl" : "max-w-sm")}>
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Search className={clsx(
+          "absolute top-1/2 -translate-y-1/2 text-muted-foreground",
+          isLarge ? "left-5 h-6 w-6" : "left-3 h-4 w-4"
+        )} />
         <input
           ref={inputRef}
           type="text"
@@ -134,10 +142,18 @@ export function SearchBar() {
           onKeyDown={handleKeyDown}
           onFocus={() => query.length >= 2 && setIsOpen(true)}
           placeholder="Search dams..."
-          className="w-full rounded-lg border border-border bg-background py-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+          className={clsx(
+            "w-full rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent",
+            isLarge
+              ? "py-4 pl-14 pr-6 text-lg"
+              : "py-2 pl-9 pr-4 text-sm"
+          )}
         />
         {isLoading && (
-          <Loader2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-muted-foreground" />
+          <Loader2 className={clsx(
+            "absolute top-1/2 -translate-y-1/2 animate-spin text-muted-foreground",
+            isLarge ? "right-5 h-6 w-6" : "right-3 h-4 w-4"
+          )} />
         )}
       </div>
 
