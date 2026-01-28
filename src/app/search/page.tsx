@@ -5,6 +5,7 @@ import { Search } from 'lucide-react';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { DamCard } from '@/components/DamCard';
 import { SearchBar } from '@/components/SearchBar';
+import { InContentAd } from '@/components/AdUnit';
 
 export const dynamic = 'force-dynamic';
 
@@ -74,6 +75,8 @@ export default async function SearchPage({ searchParams }: PageProps) {
           </div>
         </div>
 
+        <InContentAd />
+
         {/* Results */}
         {query && (
           <div>
@@ -110,7 +113,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
                 </p>
                 <p className="text-sm text-muted-foreground">
                   Try a different search term or{' '}
-                  <Link href="/state" className="text-accent hover:underline">
+                  <Link href="/state" className="text-accent underline underline-offset-2 hover:text-accent/80">
                     browse by state
                   </Link>
                 </p>
@@ -153,7 +156,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
             </p>
             <p className="text-sm text-muted-foreground">
               Or{' '}
-              <Link href="/state" className="text-accent hover:underline">
+              <Link href="/state" className="text-accent underline underline-offset-2 hover:text-accent/80">
                 browse by state
               </Link>
             </p>

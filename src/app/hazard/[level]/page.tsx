@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { AlertTriangle } from 'lucide-react';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { DamCard } from '@/components/DamCard';
+import { SidebarAd, InContentAd } from '@/components/AdUnit';
 
 export const dynamic = 'force-dynamic';
 
@@ -165,6 +166,8 @@ export default async function HazardLevelPage({ params, searchParams }: PageProp
                 ))}
               </div>
             </div>
+
+            <SidebarAd />
           </div>
 
           {/* Main Content */}

@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { DamCard } from '@/components/DamCard';
+import { SidebarAd } from '@/components/AdUnit';
 
 export const dynamic = 'force-dynamic';
 
@@ -139,6 +140,8 @@ export default async function CountyPage({ params, searchParams }: PageProps) {
             >
               <span className="text-accent font-medium text-base">← Back to {state.name}</span>
             </Link>
+
+            <SidebarAd />
           </div>
 
           {/* Main Content */}

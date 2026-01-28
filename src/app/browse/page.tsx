@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { MapPin, AlertTriangle, Activity, Building2, ArrowRight } from 'lucide-react';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { InContentAd } from '@/components/AdUnit';
 
 export const metadata: Metadata = {
   title: 'Browse Dams',
@@ -54,6 +55,8 @@ export default function BrowsePage() {
             purpose, or ownership type.
           </p>
         </div>
+
+        <InContentAd />
 
         <div className="grid sm:grid-cols-2 gap-6 max-w-4xl">
           {browseCategories.map((category) => (

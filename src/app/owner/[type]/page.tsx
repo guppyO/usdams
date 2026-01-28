@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Building2 } from 'lucide-react';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { DamCard } from '@/components/DamCard';
+import { SidebarAd, InContentAd } from '@/components/AdUnit';
 
 export const dynamic = 'force-dynamic';
 
@@ -150,6 +151,8 @@ export default async function OwnerTypePage({ params, searchParams }: PageProps)
             >
               <span className="text-accent font-medium text-base">← All Owner Types</span>
             </Link>
+
+            <SidebarAd />
           </div>
 
           {/* Main Content */}
