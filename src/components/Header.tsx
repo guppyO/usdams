@@ -11,15 +11,37 @@ const navigation = [
   { name: 'By State', href: '/state' },
   {
     name: 'By Hazard',
-    href: '#',
+    href: '/hazard',
     children: [
       { name: 'High Hazard', href: '/hazard/high' },
       { name: 'Significant Hazard', href: '/hazard/significant' },
       { name: 'Low Hazard', href: '/hazard/low' },
     ],
   },
-  { name: 'By Purpose', href: '/purpose' },
-  { name: 'By Owner Type', href: '/owner' },
+  {
+    name: 'By Purpose',
+    href: '/purpose',
+    children: [
+      { name: 'Recreation', href: '/purpose/recreation' },
+      { name: 'Water Supply', href: '/purpose/water-supply' },
+      { name: 'Flood Risk Reduction', href: '/purpose/flood-risk-reduction' },
+      { name: 'Fire Protection', href: '/purpose/fire-protection-stock-or-small-fish-pond' },
+      { name: 'Irrigation', href: '/purpose/irrigation' },
+      { name: 'All Purposes', href: '/purpose' },
+    ],
+  },
+  {
+    name: 'By Owner',
+    href: '/owner',
+    children: [
+      { name: 'Private', href: '/owner/private' },
+      { name: 'Local Government', href: '/owner/local-government' },
+      { name: 'State', href: '/owner/state' },
+      { name: 'Federal', href: '/owner/federal' },
+      { name: 'Public Utility', href: '/owner/public-utility' },
+      { name: 'All Owner Types', href: '/owner' },
+    ],
+  },
 ];
 
 export function Header() {
