@@ -50,7 +50,7 @@ export default async function HomePage() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('https://images.pexels.com/photos/6333846/pexels-photo-6333846.jpeg?auto=compress&cs=tinysrgb&w=2000')`
+            backgroundImage: `url('https://images.pexels.com/photos/27505777/pexels-photo-27505777.jpeg?auto=compress&cs=tinysrgb&w=2000')`
           }}
         />
         {/* Overlay for text readability - lighter to show dam image */}

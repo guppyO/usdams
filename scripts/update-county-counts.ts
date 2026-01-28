@@ -11,23 +11,56 @@ const supabase = createClient(
 );
 
 async function updateCountyCounts() {
+  console.log('='.repeat(70));
+  console.log('UPDATE COUNTY DAM COUNTS');
+  console.log('='.repeat(70));
+  console.log();
+
+  // Get all counties (paginate since Supabase returns 1000 max by default)
   console.log('Fetching all counties...');
+  const allCounties: Array<{ id: number; name: string; state_id: number }> = [];
+  let offset = 0;
+  const batchSize = 1000;
 
-  // Get all counties with their state info
-  const { data: counties, error: countiesError } = await supabase
-    .from('counties')
-    .select('id, name, state_id, states(name)');
+  while (true) {
+    const { data: batch, error: countyError } = await supabase
+      .from('counties')
+      .select('id, name, state_id')
+      .range(offset, offset + batchSize - 1);
 
-  if (countiesError) {
-    console.error('Error fetching counties:', countiesError);
-    return;
+    if (countyError) {
+      console.error('Error fetching counties:', countyError.message);
+      return;
+    }
+
+    if (!batch || batch.length === 0) break;
+
+    allCounties.push(...batch);
+    console.log(`  Fetched ${allCounties.length} counties...`);
+
+    if (batch.length < batchSize) break;
+    offset += batchSize;
   }
 
-  console.log(`Found ${counties?.length || 0} counties. Updating counts...`);
+  const counties = allCounties;
+  console.log(`Found ${counties?.length || 0} counties total`);
+  console.log();
 
+  // Get state names for lookup
+  const { data: states } = await supabase
+    .from('states')
+    .select('id, name');
+
+  const stateIdToName = new Map<number, string>();
+  states?.forEach(s => stateIdToName.set(s.id, s.name));
+
+  // Update each county's dam_count
+  console.log('Updating county dam counts...');
   let updated = 0;
+  let errors = 0;
+
   for (const county of counties || []) {
-    const stateName = (county.states as any)?.name;
+    const stateName = stateIdToName.get(county.state_id);
     if (!stateName) continue;
 
     // Count dams in this county
@@ -37,35 +70,41 @@ async function updateCountyCounts() {
       .eq('state', stateName)
       .eq('county', county.name);
 
-    // Update county dam_count
+    // Update the county
     const { error: updateError } = await supabase
       .from('counties')
       .update({ dam_count: count || 0 })
       .eq('id', county.id);
 
     if (updateError) {
-      console.error(`Error updating county ${county.name}:`, updateError);
+      console.error(`  Error updating ${county.name}: ${updateError.message}`);
+      errors++;
     } else {
       updated++;
-    }
-
-    if (updated % 500 === 0) {
-      console.log(`  Updated ${updated} counties...`);
+      if (updated % 100 === 0) {
+        console.log(`  Updated ${updated} counties...`);
+      }
     }
   }
 
-  console.log(`Done! Updated ${updated} counties.`);
+  console.log();
+  console.log('='.repeat(70));
+  console.log('COMPLETE');
+  console.log('='.repeat(70));
+  console.log(`  Counties updated: ${updated}`);
+  console.log(`  Errors: ${errors}`);
 
-  // Verify some counts
-  const { data: sampleCounties } = await supabase
+  // Verify a sample
+  console.log();
+  console.log('Sample of updated counties:');
+  const { data: sample } = await supabase
     .from('counties')
-    .select('name, dam_count, states(name)')
+    .select('name, dam_count')
     .order('dam_count', { ascending: false })
     .limit(10);
 
-  console.log('\nTop 10 counties by dam count:');
-  sampleCounties?.forEach(c => {
-    console.log(`  ${c.name}, ${(c.states as any)?.name}: ${c.dam_count} dams`);
+  sample?.forEach(c => {
+    console.log(`  ${c.name}: ${c.dam_count} dams`);
   });
 }
 

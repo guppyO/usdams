@@ -17,7 +17,7 @@ interface PageProps {
   searchParams: Promise<{ page?: string; hazard?: string }>;
 }
 
-const PAGE_SIZE = 24;
+const PAGE_SIZE = 100;
 
 async function getStateData(slug: string, page: number, hazardFilter?: string) {
   const supabase = createClient(

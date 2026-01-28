@@ -13,7 +13,7 @@ interface PageProps {
   searchParams: Promise<{ page?: string; state?: string }>;
 }
 
-const PAGE_SIZE = 24;
+const PAGE_SIZE = 100;
 
 async function getPurposeData(slug: string, page: number, stateFilter?: string) {
   const supabase = createClient(

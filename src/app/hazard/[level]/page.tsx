@@ -13,7 +13,7 @@ interface PageProps {
   searchParams: Promise<{ page?: string; state?: string }>;
 }
 
-const PAGE_SIZE = 24;
+const PAGE_SIZE = 100;
 
 const HAZARD_INFO: Record<string, { name: string; description: string; color: string }> = {
   high: {
@@ -182,7 +182,7 @@ export default async function HazardLevelPage({ params, searchParams }: PageProp
             {dams.length > 0 ? (
               <div className="grid sm:grid-cols-2 gap-4 mb-8">
                 {dams.map((dam) => (
-                  <DamCard key={dam.id} dam={dam} />
+                  <DamCard key={dam.id} dam={dam} showHazard={true} />
                 ))}
               </div>
             ) : (

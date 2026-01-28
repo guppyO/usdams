@@ -16,7 +16,12 @@ interface Dam {
   year_completed?: number;
 }
 
-export function DamCard({ dam }: { dam: Dam }) {
+interface DamCardProps {
+  dam: Dam;
+  showHazard?: boolean;
+}
+
+export function DamCard({ dam, showHazard = false }: DamCardProps) {
   const getHazardColor = (hazard: string) => {
     switch (hazard?.toLowerCase()) {
       case 'high':
@@ -39,7 +44,7 @@ export function DamCard({ dam }: { dam: Dam }) {
         <h3 className="font-semibold text-foreground group-hover:text-accent transition-colors line-clamp-2">
           {dam.name || 'Unnamed Dam'}
         </h3>
-        {dam.hazard_potential && (
+        {showHazard && dam.hazard_potential && (
           <span className={cn(
             'shrink-0 px-2 py-0.5 rounded text-xs font-medium',
             getHazardColor(dam.hazard_potential)
