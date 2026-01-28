@@ -13,7 +13,7 @@ const inter = Inter({
   display: 'swap',
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://usdams.com';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://usdamsdata.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -42,8 +42,10 @@ export const metadata: Metadata = {
   publisher: 'US Dams Database',
   icons: {
     icon: [
+      { url: '/favicon.ico', sizes: 'any' },
       { url: '/favicon.svg', type: 'image/svg+xml' },
     ],
+    shortcut: '/favicon.ico',
     apple: '/favicon.svg',
   },
   robots: {
